@@ -61,7 +61,7 @@ const TargetAreaList = () => {
             key: 'publicStatus',
             render: (_, { publicStatus }) => (
                 <Tag color={publicStatus === 2  ? 'geekblue' : 'green'} key={publicStatus}>
-                    { publicStatus === 1  ? '已发布' :'未发布'}
+                    { publicStatus === 2  ? '已发布' :'未发布'}
                 </Tag>
               ),
         }

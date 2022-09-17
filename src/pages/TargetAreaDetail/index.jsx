@@ -10,6 +10,7 @@ const $api = axios.create({
 });
 
 const TargetAreaDetail = ({editdata, goBack}) => {
+  console.log('editdata', editdata)
   const formRef = useRef();
   const [targetArea, setTargetArea]= useState('');
   const [areaRange, setAreaRange]= useState('');
@@ -100,7 +101,8 @@ const TargetAreaDetail = ({editdata, goBack}) => {
         targetArea: editdata.targetAreaName,
         areaRange: editdata.areaRangeDesc,
         region: [editdata.province, editdata.city, editdata.district],
-        relatedFormula: editdata.relatedFormulas.split(',')
+        relatedFormula: editdata.relatedFormulas.split(','),
+        publicStatus: editdata.publicStatus
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -162,9 +164,9 @@ const TargetAreaDetail = ({editdata, goBack}) => {
           }
         ]}
       >
-        <Radio.Group onChange={onChange1} value={publicStatus}>
-          <Radio value="1"> 未发布 </Radio>
-          <Radio value="2"> 已发布 </Radio>
+        <Radio.Group onChange={onChange1} value={1}>
+          <Radio value={1}> 未发布 </Radio>
+          <Radio value={2}> 已发布 </Radio>
         </Radio.Group>
       </Form.Item>
 

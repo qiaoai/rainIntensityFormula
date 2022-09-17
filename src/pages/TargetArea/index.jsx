@@ -165,8 +165,8 @@ const TargetArea = () => {
         ]}
       >
         <Radio.Group onChange={onChange1} value={publicStatus}>
-          <Radio value="1"> 未发布 </Radio>
-          <Radio value="2"> 已发布 </Radio>
+          <Radio value={1}> 未发布 </Radio>
+          <Radio value={2}> 已发布 </Radio>
         </Radio.Group>
       </Form.Item>
 

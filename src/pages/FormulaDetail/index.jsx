@@ -16,7 +16,10 @@ const $api2 = axios.create({
 });
 
 
+
+
 const FormulaDetail = ({editdata, goBack}) => {
+  
   const [formulaName, SetFormulaName] = useState(editdata.formulaName)
   const [formulaSrc, SetFormulaSrc] = useState(editdata.formulaSrc)
   const [usecondition, SetUsecondition] = useState(editdata.usecondition)
@@ -39,6 +42,8 @@ const FormulaDetail = ({editdata, goBack}) => {
   const formRef = useRef();
   const accessToken = useRef("");
 
+
+  
  
   const createFormData = (result, file, fileName) => {
     const formData = new FormData();
@@ -191,10 +196,13 @@ const FormulaDetail = ({editdata, goBack}) => {
         comment,
         status
       }
-      console.log('data', data)
       addFormula(data)
   }
-     
+
+  useEffect(() => {
+    console.log('useEffect editdata', editdata.formulaName)
+    SetFormulaName(() => editdata.formulaName);
+  },[])
   return (
     <div>
       <Form
@@ -206,22 +214,22 @@ const FormulaDetail = ({editdata, goBack}) => {
           span: 16,
         }}
         initialValues={{
-          formulaName:'',
-          formulaSrc:'',
-          usecondition:'',
-          useDesc:'',
-          q220: '',
-          materialYear:'',
-          startEndYear:'',
-          sampleMethod:'',
-          theoryDistribute:'',
-          sampleSite:'',
-          sourceFile:'',
-          sourceLink:'',
-          formatUnit:'',
-          replayTime:'',
-          comment:'',
-          status:''
+          formulaName: editdata.formulaName,
+          formulaSrc: editdata.formulaSrc,
+          usecondition: editdata.usecondition,
+          useDesc:editdata.useDesc,
+          q220: editdata.q220,
+          materialYear: editdata.materialYear,
+          startEndYear: editdata.startEndYear,
+          sampleMethod: editdata.sampleMethod,
+          theoryDistribute:editdata.theoryDistribute,
+          sampleSite: editdata.sampleSite,
+          sourceFile: editdata.sourceFile,
+          sourceLink: editdata.sourceLink,
+          formatUnit: editdata.formatUnit,
+          replayTime: editdata.replayTime,
+          comment: editdata.comment,
+          status: editdata.status, 
         }}
         onFinish={onFinish}
         ref={formRef}
@@ -287,7 +295,7 @@ const FormulaDetail = ({editdata, goBack}) => {
     </Form.Item>
 
     <Form.Item label="公式说明" name="useDesc">
-      <Input.TextArea rows={4} onChange={(e) => SetUseDesc(e.target.value)} />
+      <Input.TextArea value={useDesc} rows={4} onChange={(e) => SetUseDesc(e.target.value)} />
     </Form.Item>
     
     <Form.Item label="资料年数" name="q220">
