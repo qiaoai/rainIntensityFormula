@@ -1,0 +1,9 @@
+/* .ant-layout{
+    height: 100vh!important;
+} */
+.logo{
+    height: 60px;
+}
+.site-layout-background-header{
+    background: url('../../static/rain.jpg')!important;
+}
