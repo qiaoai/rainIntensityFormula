@@ -57,7 +57,7 @@ const FormulaDetail = ({editdata, goBack}) => {
   const uploadFiles = async (file, fileName) => {
     return new Promise(async (resolve, reject) => {
         const uploadFileParameterData = await getUploadFileParameterData(fileName)
-        const result = JSSON.parse(uploadFileParameterData);
+        const result = JSON.parse(uploadFileParameterData);
         const formData = createFormData(result, file, fileName);
         try {
           await requestMethod(result.url, 'POST', formData);
@@ -77,18 +77,18 @@ const FormulaDetail = ({editdata, goBack}) => {
           "path": `${FILE_ADDRESS}/${fileName}`
         }
         accessToken.current = parseData.access_token;
-        return $api2.post(`${GET_UPLOADFILE_PARAMETER_URL}=${parseData.access_token}`, parmater)
-        // return requestMethod(
-        //   `${GET_UPLOADFILE_PARAMETER_URL}=${parseData.access_token}`,
-        //   'POST',
-        //   JSON.stringify(parmater)
-        // )
+        // return $api2.post(`${GET_UPLOADFILE_PARAMETER_URL}=${parseData.access_token}`, parmater)
+        return requestMethod(
+          `${GET_UPLOADFILE_PARAMETER_URL}=${parseData.access_token}`,
+          'POST',
+          JSON.stringify(parmater)
+        )
       }
     }
 
     const getAccessToken = async () => {
-      return $api2.get(GET_ACCESSTOKEN_URL)
-      // return requestMethod(GET_ACCESSTOKEN_URL, 'GET');
+      // return $api2.get(GET_ACCESSTOKEN_URL)
+      return requestMethod(`${GET_ACCESSTOKEN_URL}`, 'GET');
     }
  
     const addFormula = async (params) => {
@@ -131,12 +131,14 @@ const FormulaDetail = ({editdata, goBack}) => {
       }
 
       try {
-        const result = await $api2.post('/tcb/batchdownloadfile?access_token=${accessToken.current}',parameterData)
-        // const result = await requestMethod(`api/tcb/batchdownloadfile?access_token=${accessToken.current}`, 'POST', JSON.stringify(parameterData));
-        const parseData = result.data.data;
+        // const result = await $api2.post('/tcb/batchdownloadfile?access_token=${accessToken.current}',parameterData)
+        const result = await requestMethod(`api/tcb/batchdownloadfile?access_token=${accessToken.current}`, 'POST', JSON.stringify(parameterData));
+        console.log('result', result)
+        const parseData = JSON.parse(result);
         const { errmsg, errcode, file_list} = parseData;
         if (errmsg === 'ok' && errcode === 0 && file_list) {
           const srcList = parseData.file_list.map(file => file.download_url);
+          console.log('srcList[0]', srcList[0])
           setImgSrcList(()=> srcList);
           SetFormulaSrc(()=> srcList[0]);
         }
@@ -145,7 +147,6 @@ const FormulaDetail = ({editdata, goBack}) => {
         setFileList(()=>[])
       } catch (error) {
         setUploading(false)
-        reject(error)
       }
     }
 
@@ -260,7 +261,7 @@ const FormulaDetail = ({editdata, goBack}) => {
     >
       <div className='img-display-upload'>
           <div className='img-container'>
-          <Image width={200} src={editdata.formulaSrc}/>
+          <Image width={200} src={formulaSrc}/>
           </div>
           <div className='upload'>
             <Upload {...props}>
