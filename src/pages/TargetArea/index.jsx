@@ -31,7 +31,7 @@ const TargetArea = () => {
         label: formulaList[i].formulaName
       })
     }
-    setSelectOptions(arr);
+    setSelectOptions(arr.reverse());
   }
  
     const onChange = (value) => {

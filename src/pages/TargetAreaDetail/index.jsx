@@ -43,7 +43,7 @@ const TargetAreaDetail = ({editdata, goBack}) => {
           label: formulaList[i].formulaName
         })
       }
-      setSelectOptions(arr);
+      setSelectOptions(arr.reverse());
     }
   }
  
